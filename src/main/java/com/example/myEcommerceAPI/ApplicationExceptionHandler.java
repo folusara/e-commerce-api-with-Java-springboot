@@ -42,6 +42,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResponse> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
         String errorMessage = ex.getMessage().toLowerCase();
+        System.err.println(errorMessage);
         String responseMessage = "Data integrity violation: We cannot process your request.";
 System.err.println(errorMessage);
 
