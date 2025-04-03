@@ -14,17 +14,15 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    private JWTUtil JWTUtil;
+    private final JWTUtil JWTUtil;
+    private final ProductRepository productRepository;
 
-    ProductRepository productRepository;
-
-    ProductServiceImpl(JWTUtil JWTUtil) {
+    ProductServiceImpl(JWTUtil JWTUtil, ProductRepository productRepository) {
         this.JWTUtil = JWTUtil;
+        this.productRepository = productRepository;
     }
 
     @Override

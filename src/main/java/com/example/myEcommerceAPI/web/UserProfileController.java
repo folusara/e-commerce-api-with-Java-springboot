@@ -20,6 +20,8 @@ import com.example.myEcommerceAPI.service.UserProfileService;
 import com.example.myEcommerceAPI.service.UserService;
 import com.example.myEcommerceAPI.utils.JWTUtil;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/user")
+@Tag(name = "Userprofile API", description = "API for managing Users profile")
 public class UserProfileController {
 
     UserProfileRepository userProfileRepository;
@@ -40,6 +43,7 @@ public class UserProfileController {
     UserService UserService;
     JWTUtil JWTUtil;
     
+    @Operation(summary = "Create user profile")
     @PostMapping("/create-user-profile")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserProfile userProfile, HttpServletRequest request,
             String token) {
@@ -63,7 +67,8 @@ public class UserProfileController {
         UserProfile savedProfile = userProfileService.saveUserProfile(userProfile);
         return new ResponseEntity<>(savedProfile, HttpStatus.CREATED);
     }
-    
+
+    @Operation(summary = "Update user profile")
     @PatchMapping("/update-user-profile")
     public ResponseEntity<?> UpdateProfile(@Valid @RequestBody UserProfileRequest userProfile, HttpServletRequest request) {
         Long userId = JWTUtil.extractUserId(request);
@@ -71,6 +76,7 @@ public class UserProfileController {
         return new ResponseEntity<>(savedProfile, HttpStatus.ACCEPTED);
     }
 
+    @Operation(summary = "get user profile")
     @GetMapping("/get-user-profile")
     public ResponseEntity<?> GetUserProfile(@Valid HttpServletRequest request) {
         Long userId = JWTUtil.extractUserId(request);
@@ -78,6 +84,7 @@ public class UserProfileController {
         return new ResponseEntity<>(profile, HttpStatus.OK);
     }
     
+    @Operation(summary = "delete user profile")
     @DeleteMapping("/delete-user-profile")
     public ResponseEntity<?> DeleteUserProfile(@Valid HttpServletRequest request) {
         Long userId = JWTUtil.extractUserId(request);

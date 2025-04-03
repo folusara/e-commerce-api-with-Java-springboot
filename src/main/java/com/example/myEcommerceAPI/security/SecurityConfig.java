@@ -13,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
-import com.example.myEcommerceAPI.entity.UserProfile;
 import com.example.myEcommerceAPI.entrypoint.CustomAuthenticationEntryPoint;
 import com.example.myEcommerceAPI.repository.UserProfileRepository;
 import com.example.myEcommerceAPI.repository.UserRepository;
@@ -50,13 +49,17 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.PUT, SecurityConstants.RESET_PASSWORD_PATH + "/**").permitAll()
             .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
             .requestMatchers("/customer/**").hasAuthority("ROLE_CUSTOMER")
+            .requestMatchers(HttpMethod.GET, SecurityConstants.SWAGGER_UI).permitAll()
+            .requestMatchers(HttpMethod.GET, SecurityConstants.SWAGGER_UI_HTML).permitAll()
+            .requestMatchers(HttpMethod.GET, SecurityConstants.API_DOCS).permitAll()
+            .requestMatchers(HttpMethod.GET,"/products").permitAll()
             .anyRequest().authenticated()
                 )
         .userDetailsService(customUserDetailsService)
                 .exceptionHandling(exception -> exception
                 .accessDeniedHandler(customAccessDeniedHandler())
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
-        .addFilterBefore(new ExceptionHandlerFilter(), AuthenticationFilter.class)  
+        .addFilterBefore(new ExceptionHandlerFilter(), AuthenticationFilter.class)
         .addFilter(authenticationFilter)
         .addFilterAfter(new JWTAuthorizationFilter(), AuthenticationFilter.class)
         // .userDetailsService(customUserDetailsService)
