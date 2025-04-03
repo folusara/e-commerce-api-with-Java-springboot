@@ -1,7 +1,9 @@
 package com.example.myEcommerceAPI.web;
 
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import com.example.myEcommerceAPI.DataTransferObjects.ResetPasswordRequest;
 import com.example.myEcommerceAPI.entity.User;
 import com.example.myEcommerceAPI.service.UserService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -32,6 +36,7 @@ public class UserController {
 
 	UserService userService;
 	UserRepository userRepository;
+	private final Set<String> tokenBlacklist = new HashSet<>();
 
 	@GetMapping("/{id}")
 	public ResponseEntity<String> findById(@PathVariable Long id) {
@@ -62,5 +67,20 @@ public class UserController {
 		System.err.println("hello forgot password");
 		return new ResponseEntity<>("Password reset process started", HttpStatus.ACCEPTED);
 	}
+
+	
+	 @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            tokenBlacklist.add(token);
+        }
+        return ResponseEntity.ok("Logged out successfully");
+    }
+
+    public boolean isTokenBlacklisted(String token) {
+        return tokenBlacklist.contains(token);
+    }
 
 }

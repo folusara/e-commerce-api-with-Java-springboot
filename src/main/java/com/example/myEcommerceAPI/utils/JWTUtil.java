@@ -16,7 +16,7 @@ public class JWTUtil {
     private static final String SECRET_KEY = SecurityConstants.SECRET_KEY;
     HttpServletRequest request;
 
-        public Long extractUserId(HttpServletRequest request) {
+        public static Long extractUserId(HttpServletRequest request) {
             String token = getTokenFromRequest(request);
             if (token != null) {
                 token = token.replace("Bearer ", "");
@@ -28,14 +28,14 @@ public class JWTUtil {
             return null;
         }
     
-        public String extractUsername(String token) {
+        public static String extractUsername(String token) {
             DecodedJWT jwt = JWT.require(Algorithm.HMAC512(SECRET_KEY))
                     .build()
                     .verify(token.replace(SecurityConstants.BEARER, ""));
             return jwt.getSubject();
         }
 
-        private String getTokenFromRequest(HttpServletRequest request) {
+        private static String getTokenFromRequest(HttpServletRequest request) {
             String header = request.getHeader("Authorization");
             if (header != null && header.startsWith("Bearer ")) {
                 return header.replace("Bearer ", "");

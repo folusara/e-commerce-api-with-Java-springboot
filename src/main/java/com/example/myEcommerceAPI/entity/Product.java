@@ -1,6 +1,5 @@
 package com.example.myEcommerceAPI.entity;
 
-import java.sql.Date;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -35,12 +34,16 @@ public class Product {
     private List<Order> order;
 
 
-    public Product(double price, String name, String description, User user, List<Order>  order) {
+    public Product(double price, String name, String description, User user, List<Order> order) {
         this.price = price;
         this.description = description;
         this.user = user;
         this.order = order;
         this.name = name;
+    }
+    
+    public Product() {
+        
     }
 
 
