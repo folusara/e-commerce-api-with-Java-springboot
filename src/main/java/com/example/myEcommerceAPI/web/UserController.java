@@ -31,7 +31,7 @@ import com.example.myEcommerceAPI.repository.UserRepository;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 @Tag(name = "Auth", description = "API for managing Auth")
 public class UserController {
 

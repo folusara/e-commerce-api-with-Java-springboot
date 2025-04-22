@@ -9,10 +9,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -21,7 +25,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "Product price is required")
+    @NotNull(message = "Price is required")
     private double price;
 
     @Column(unique = true)
@@ -40,14 +44,32 @@ public class Product {
     @OneToMany(mappedBy = "", cascade = CascadeType.ALL)
     private List<Order> order;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @NotNull(message = "Product category is required")
+    private Category category;
 
-    public Product(double price, String name, String description, List<Order> order, String image_url, UserProfile userProfile) {
+    @ManyToMany 
+    @JoinTable(
+        name = "product_tags",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    @NotNull(message = "Kindly add at least one product Tag")
+    private List<Tag> tags;
+    
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    private Inventory inventory;
+
+    public Product(double price, String name, String description, List<Order> order, String image_url, UserProfile userProfile, Category category, List<Tag> tags) {
         this.price = price;
         this.description = description;
         this.order = order;
         this.name = name;
         this.image_url = image_url;
         this.userProfile = userProfile;
+        this.category = category;
+        this.tags = tags;
     }
     
     public Product() {
@@ -109,6 +131,30 @@ public class Product {
 
     public void setUserProfile(UserProfile userProfile) {
         this.userProfile = userProfile;
+    }
+
+    public Category getCategory() {
+        return this.category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public List<Tag> getTags() {
+        return this.tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public Inventory getInventory() {
+        return this.inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
 

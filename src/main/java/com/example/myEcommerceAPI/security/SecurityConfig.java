@@ -37,7 +37,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         AuthenticationFilter authenticationFilter = new AuthenticationFilter(customAuthenticationManager, userServiceImpl, userRepository, userProfileRepository);
-        authenticationFilter.setFilterProcessesUrl("/authenticate");
+        authenticationFilter.setFilterProcessesUrl("/api/authenticate");
         http
         .headers(headers -> headers.frameOptions(frame -> frame.disable()))
         .csrf(csrf -> csrf.disable())

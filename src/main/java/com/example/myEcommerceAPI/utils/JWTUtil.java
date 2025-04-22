@@ -13,14 +13,12 @@ import jakarta.servlet.http.HttpServletRequest;
 @Component
 public class JWTUtil {
     
-    private static final String SECRET_KEY = SecurityConstants.SECRET_KEY;
     HttpServletRequest request;
-
         public static Long extractUserId(HttpServletRequest request) {
             String token = getTokenFromRequest(request);
             if (token != null) {
                 token = token.replace("Bearer ", "");
-                DecodedJWT jwt = JWT.require(Algorithm.HMAC512(SECRET_KEY))
+                DecodedJWT jwt = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET_KEY))
                         .build()
                         .verify(token.replace(SecurityConstants.BEARER, ""));
                 return jwt.getClaim("user_id").asLong();
@@ -29,7 +27,7 @@ public class JWTUtil {
         }
     
         public static String extractUsername(String token) {
-            DecodedJWT jwt = JWT.require(Algorithm.HMAC512(SECRET_KEY))
+            DecodedJWT jwt = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET_KEY))
                     .build()
                     .verify(token.replace(SecurityConstants.BEARER, ""));
             return jwt.getSubject();

@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 @Tag(name = "Userprofile API", description = "API for managing Users profile")
 public class UserProfileController {
 

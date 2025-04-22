@@ -1,5 +1,6 @@
 package com.example.myEcommerceAPI.web;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -9,14 +10,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.myEcommerceAPI.DataTransferObjects.CategoryResponseDTO;
+import com.example.myEcommerceAPI.DataTransferObjects.ProductResponseDTO;
+import com.example.myEcommerceAPI.DataTransferObjects.UserProfileCreateProductResponseDTO;
+import com.example.myEcommerceAPI.DataTransferObjects.createProductDTO;
+import com.example.myEcommerceAPI.Mappers.ProductMapper;
+import com.example.myEcommerceAPI.entity.Category;
 import com.example.myEcommerceAPI.entity.Product;
 import com.example.myEcommerceAPI.entity.User;
 import com.example.myEcommerceAPI.entity.UserProfile;
+import com.example.myEcommerceAPI.repository.CategoryRepository;
 import com.example.myEcommerceAPI.repository.ProductRepository;
+import com.example.myEcommerceAPI.repository.TagRepository;
 import com.example.myEcommerceAPI.repository.UserProfileRepository;
 import com.example.myEcommerceAPI.repository.UserRepository;
 import com.example.myEcommerceAPI.service.ProductService;
+import com.example.myEcommerceAPI.service.TagValidationService;
 import com.example.myEcommerceAPI.utils.JWTUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,6 +41,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RestController
 @Tag(name = "Product API", description = "API for managing products")
+@RequestMapping("/api")
 public class ProductController {
 
    private final JWTUtil JWTUtil;
@@ -37,24 +50,33 @@ public class ProductController {
    private final ProductRepository productRepository;
    private final UserRepository userRepository;
    private final UserProfileRepository userProfileRepository;
-
-    // ProductController(JWTUtil JWTUtil) {
-    //     this.JWTUtil = JWTUtil;
-    // }
+   private final CategoryRepository categoryRepository;
+   private final TagRepository tagRepository;
+   private final ProductMapper productMapper;
 
     @Operation(summary = "Create product by admin")
     @PostMapping("/admin/create-product")
-    public ResponseEntity<?> createProduct(@Valid @RequestBody Product product, HttpServletRequest request) {
+    public ResponseEntity<?> createProduct(@Valid @RequestBody createProductDTO product, HttpServletRequest request) {
         Long userId = JWTUtil.extractUserId(request);
+        Product newProduct = new Product();
         if (productRepository.findByName(product.getName()).isPresent()) {
-            return new ResponseEntity<>("Product with that name already exists", HttpStatus.NOT_ACCEPTABLE);
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(Map.of("message", "Product with that name already exists"));
         }
         Optional<UserProfile> userprofileOptional = userProfileRepository.findByUserId(userId);
-        if (userprofileOptional.isPresent()) {
-            product.setUserProfile(userprofileOptional.get());
-            return new ResponseEntity<>(productService.SaveProduct(product), HttpStatus.CREATED);
+        Optional<Category> categoryOptional = categoryRepository.findById(product.getCategory_id());
+        if (!categoryOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(Map.of("message", "Product category with that name does not exists"));
         }
-        return new ResponseEntity<>( new EntityNotFoundException("User not found"), HttpStatus.BAD_REQUEST);
+        List<com.example.myEcommerceAPI.entity.Tag> tags = tagRepository.findAllById(product.getTags());
+        newProduct.setUserProfile(userprofileOptional.get());
+        newProduct.setTags(tags);
+        newProduct.setCategory(categoryOptional.get());
+        newProduct.setImage_url(product.getImage_url());
+        newProduct.setName(product.getName());
+        newProduct.setDescription(product.getDescription());
+        newProduct.setPrice(product.getPrice());
+        Product savedProduct = productService.SaveProduct(newProduct);
+        return ResponseEntity.status(HttpStatus.CREATED).body(productMapper.toDto(savedProduct));
     }
     
     @Operation(summary = "Update product by name")
@@ -65,6 +87,7 @@ public class ProductController {
             Product product = existingProduct.get();
             product.setPrice(updatedProduct.getPrice());
             product.setDescription(updatedProduct.getDescription());
+            product.setImage_url(updatedProduct.getImage_url());
             return new ResponseEntity<>(productService.SaveProduct(product), HttpStatus.OK);
         }
         return new ResponseEntity<>("Product with that name does not exist", HttpStatus.NOT_FOUND);
@@ -76,7 +99,7 @@ public class ProductController {
      
         Optional<Product> searchedProduct = productRepository.findByName(name);
         System.err.println("serached" + searchedProduct);
-        System.err.println("serached" +name);
+        System.err.println("serached" + name);
         if (searchedProduct.isPresent()) {
             return new ResponseEntity<>(searchedProduct, HttpStatus.OK);
         }
@@ -86,10 +109,12 @@ public class ProductController {
     @Operation(summary = "get products")
     @GetMapping("/products")
     public ResponseEntity<?> GetProducts() {
-        List <Product> products = productService.GetProducts();
+        List<Product> products = productService.GetProducts();
         if (!products.isEmpty()) {
             return new ResponseEntity<>(products, HttpStatus.OK);
         }
-        return  new ResponseEntity<>("No products currently", HttpStatus.OK);
+        return new ResponseEntity<>("No products currently", HttpStatus.OK);
     }
+    
+
 }

@@ -1,6 +1,7 @@
 package com.example.myEcommerceAPI.security.filter;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -98,13 +99,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         
         if (optionalUserProfile.isPresent()) {
             UserProfile userProfile = optionalUserProfile.get();
-            // roles = userProfile.getRoles().stream()
-            // .map(Enum::name)
-                    // .collect(Collectors.toList());
                  authorities = userProfile.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
                 .collect(Collectors.toList());
-
+            userProfile.setLastLogin(LocalDateTime.now());
+            userProfileRepository.save(userProfile);
             System.out.println("Roles after authentication: " + authorities);
 
             // Create new authentication token with updated authorities
