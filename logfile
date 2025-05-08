@@ -7,3 +7,50 @@
 2025-03-07 21:04:52.889 WAT [56685] FATAL:  role "postgres" does not exist
 2025-03-07 21:07:46.507 WAT [55419] LOG:  checkpoint starting: time
 2025-03-07 21:07:50.974 WAT [55419] LOG:  checkpoint complete: wrote 47 buffers (0.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=4.463 s, sync=0.002 s, total=4.468 s; sync files=11, longest=0.001 s, average=0.001 s; distance=272 kB, estimate=272 kB
+2025-05-03 12:48:48.537 WAT [54990] LOG:  starting PostgreSQL 15.11 (Homebrew) on x86_64-apple-darwin23.6.0, compiled by Apple clang version 16.0.0 (clang-1600.0.26.6), 64-bit
+2025-05-03 12:48:48.540 WAT [54990] LOG:  listening on IPv6 address "::1", port 5432
+2025-05-03 12:48:48.540 WAT [54990] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2025-05-03 12:48:48.542 WAT [54990] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2025-05-03 12:48:48.547 WAT [54993] LOG:  database system was shut down at 2025-05-03 12:48:32 WAT
+2025-05-03 12:48:48.552 WAT [54990] LOG:  database system is ready to accept connections
+2025-05-03 12:49:25.686 WAT [55431] FATAL:  database "tolu-oracle" does not exist
+2025-05-03 12:49:55.820 WAT [55855] FATAL:  role "postgres" does not exist
+2025-05-03 12:53:48.556 WAT [54991] LOG:  checkpoint starting: time
+2025-05-03 12:53:53.006 WAT [54991] LOG:  checkpoint complete: wrote 47 buffers (0.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=4.439 s, sync=0.003 s, total=4.451 s; sync files=11, longest=0.001 s, average=0.001 s; distance=272 kB, estimate=272 kB
+2025-05-03 12:59:37.790 WAT [61921] FATAL:  role "postgres" does not exist
+2025-05-03 13:06:16.862 WAT [67191] FATAL:  database "myecommercedb" does not exist
+2025-05-07 15:09:54.706 WAT [68245] FATAL:  role "tolu" does not exist
+2025-05-07 15:42:49.950 WAT [89342] FATAL:  role "tolu" does not exist
+2025-05-07 15:47:59.630 WAT [93445] FATAL:  role "tolu" does not exist
+2025-05-07 15:48:33.902 WAT [94005] FATAL:  role "tolu" does not exist
+2025-05-07 15:52:09.997 WAT [96874] FATAL:  role "postgres" does not exist
+2025-05-07 16:49:38.019 WAT [9079] FATAL:  role "tolu" does not exist
+2025-05-07 16:54:34.238 WAT [12991] FATAL:  role "tolu" does not exist
+2025-05-07 16:55:34.111 WAT [13992] FATAL:  role "postgres" does not exist
+2025-05-07 17:01:44.045 WAT [18875] FATAL:  role "postgres" does not exist
+2025-05-07 17:02:18.127 WAT [19413] FATAL:  role "tolu" does not exist
+2025-05-07 17:03:38.075 WAT [20499] FATAL:  role "tolu" does not exist
+2025-05-07 17:06:23.556 WAT [22845] FATAL:  role "tolu" does not exist
+2025-05-07 17:07:16.962 WAT [23635] FATAL:  role "tolu" does not exist
+2025-05-07 17:07:21.589 WAT [23797] FATAL:  role "tolu" does not exist
+2025-05-07 17:11:37.879 WAT [27274] FATAL:  role "tolu" does not exist
+2025-05-07 17:11:51.542 WAT [27558] FATAL:  role "tolu" does not exist
+2025-05-07 17:14:39.173 WAT [29911] FATAL:  role "tolu" does not exist
+2025-05-07 17:19:29.629 WAT [33875] FATAL:  role "tolu" does not exist
+2025-05-07 17:34:20.304 WAT [45943] FATAL:  role "tolu" does not exist
+2025-05-07 17:35:28.068 WAT [46872] FATAL:  role "tolu" does not exist
+2025-05-07 17:44:11.431 WAT [54173] FATAL:  role "tolu" does not exist
+2025-05-07 17:57:32.603 WAT [64487] FATAL:  role "tolu" does not exist
+2025-05-07 18:00:36.764 WAT [67076] FATAL:  role "postgres" does not exist
+2025-05-07 18:00:47.590 WAT [67304] FATAL:  role "tolu" does not exist
+2025-05-07 18:03:29.243 WAT [69580] FATAL:  role "tolu" does not exist
+2025-05-07 18:04:10.370 WAT [70182] FATAL:  role "tolu" does not exist
+2025-05-07 18:05:25.157 WAT [71219] FATAL:  role "tolu" does not exist
+2025-05-07 18:08:03.421 WAT [73352] FATAL:  role "tolu" does not exist
+2025-05-07 18:11:25.547 WAT [75995] FATAL:  role "tolu" does not exist
+2025-05-07 18:31:58.328 WAT [91756] FATAL:  role "tolu" does not exist
+2025-05-07 18:32:31.569 WAT [92284] FATAL:  role "tolu" does not exist
+2025-05-07 18:38:57.251 WAT [97360] FATAL:  role "tolu" does not exist
+2025-05-07 18:39:23.831 WAT [97803] FATAL:  role "post" does not exist
+2025-05-07 18:39:41.947 WAT [98090] FATAL:  database "tolu-oracle" does not exist
+2025-05-07 18:48:29.459 WAT [5641] FATAL:  role "tolu" does not exist

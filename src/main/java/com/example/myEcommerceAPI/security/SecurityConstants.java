@@ -11,4 +11,7 @@ public class SecurityConstants {
     public static final String API_DOCS = "/v3/api-docs/**";
     public static final String SWAGGER_UI = "/swagger-ui/**";
     public static final String SWAGGER_UI_HTML = "swagger-ui.html";
+    public static final String PAYSTACK_INIT = "https://api.paystack.co/plan";
+    public static final String PAYSTACK_INITIALIZE_PAY = "https://api.paystack.co/transaction/initialize";
+    public static final String PAYSTACK_VERIFY = "https://api.paystack.co/transaction/verify/";
 }

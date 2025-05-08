@@ -2,6 +2,8 @@ package com.example.myEcommerceAPI.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -47,6 +49,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     @NotNull(message = "Product category is required")
+    @JsonBackReference
     private Category category;
 
     @ManyToMany 

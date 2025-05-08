@@ -33,7 +33,7 @@ public class CategoryController {
     @PostMapping("/admin/createCategory")
     public ResponseEntity<?> CreateCategory(@Valid @RequestBody CreateTagDTO tagDTO) {
         if (categoryRepository.findByName(tagDTO.getName()).isPresent()) {
-            return new ResponseEntity<>("Product Tag with that name already exists", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>("Product Category with that name already exists", HttpStatus.NOT_ACCEPTABLE);
         }
         Category category = new com.example.myEcommerceAPI.entity.Category();
         category.setName(tagDTO.getName());

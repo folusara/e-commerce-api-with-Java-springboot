@@ -72,7 +72,7 @@ public class SecurityConfig {
         return (request, response, accessDeniedException) -> {
             response.setContentType("application/json");
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            // System.err.println(accessDeniedException);
+            // System.err.println(accessDeniedException.getMessage());
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
             // System.err.println("auth:"+ authentication);
@@ -81,12 +81,17 @@ public class SecurityConfig {
                 for (GrantedAuthority authority : authentication.getAuthorities()) {
                     System.out.println("User Role:" + authority.getAuthority());
                 }
+                Map<String, String> errorResponse = Map.of(
+                    "error", "Access Denied",
+                    "message", accessDeniedException.getMessage()
+                );
+                new ObjectMapper().writeValue(response.getOutputStream(), errorResponse);
             } else {
                     System.out.println("User is not authenticated.");
                 }
                 Map<String, String> errorResponse = Map.of(
                     "error", "Access Denied",
-                    "message", "You do not have permission to access this resource."
+                    "message", accessDeniedException.getMessage()
                 );
             new ObjectMapper().writeValue(response.getOutputStream(), errorResponse);
         };

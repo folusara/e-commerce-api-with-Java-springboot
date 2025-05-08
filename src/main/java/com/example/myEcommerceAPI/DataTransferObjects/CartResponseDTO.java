@@ -1,26 +1,22 @@
 package com.example.myEcommerceAPI.DataTransferObjects;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-import com.example.myEcommerceAPI.entity.Tag;
+import com.example.myEcommerceAPI.entity.CartProduct;
+import com.example.myEcommerceAPI.entity.UserProfile;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductResponseDTO {
+public class CartResponseDTO {
     private Long id;
-    private String name;
-    private String description;
-    private Double price;
-    private String imageUrl;
-    private CategoryResponseDTO category;
+    private Double total;
+    private List<CartProduct> products;
     private UserProfileCreateProductResponseDTO userProfile;
-    private List<CreateTagDTO> tags;
 }
