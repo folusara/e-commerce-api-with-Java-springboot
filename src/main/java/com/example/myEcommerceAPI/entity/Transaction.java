@@ -2,7 +2,6 @@ package com.example.myEcommerceAPI.entity;
 
 import java.time.LocalDateTime;
 
-import com.example.myEcommerceAPI.DataTransferObjects.UserProfileCreateProductResponseDTO;
 import com.example.myEcommerceAPI.enums.PaymentStatus;
 
 import jakarta.persistence.Entity;

@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -34,7 +35,7 @@ public class Cart {
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
-     UserProfile createdBy;
+    private UserProfile createdBy;
 
      // @ManyToMany(cascade = CascadeType.ALL)
      // @JoinTable(
@@ -46,7 +47,6 @@ public class Cart {
 //     @JoinColumn(name = "cart_id")
      @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
      private List<CartProduct> products = new ArrayList<>();
-     // List<CartProduct> products = new ArrayList<>();
      
      private double total;
 }

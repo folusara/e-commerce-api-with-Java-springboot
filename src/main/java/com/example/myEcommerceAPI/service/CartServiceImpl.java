@@ -1,14 +1,11 @@
 package com.example.myEcommerceAPI.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.example.myEcommerceAPI.DataTransferObjects.AddProductToCartDTO;
 import com.example.myEcommerceAPI.DataTransferObjects.ProductUpdateRequest;
-import com.example.myEcommerceAPI.DataTransferObjects.createProductDTO;
 import com.example.myEcommerceAPI.entity.Cart;
 import com.example.myEcommerceAPI.entity.CartProduct;
 import com.example.myEcommerceAPI.entity.Product;

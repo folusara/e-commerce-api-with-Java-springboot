@@ -63,19 +63,16 @@ public class SecurityConfig {
         .addFilterBefore(new ExceptionHandlerFilter(), AuthenticationFilter.class)
         .addFilter(authenticationFilter)
         .addFilterAfter(new JWTAuthorizationFilter(), AuthenticationFilter.class)
-        // .userDetailsService(customUserDetailsService)
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
-    }
+    } 
 
        private AccessDeniedHandler customAccessDeniedHandler() {
         return (request, response, accessDeniedException) -> {
             response.setContentType("application/json");
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            // System.err.println(accessDeniedException.getMessage());
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-            // System.err.println("auth:"+ authentication);
             if (authentication != null && authentication.isAuthenticated()) {
                 System.out.println("User:" + authentication);
                 for (GrantedAuthority authority : authentication.getAuthorities()) {

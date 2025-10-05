@@ -95,8 +95,12 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         Optional<UserProfile> optionalUserProfile = userProfileRepository.findByEmailIgnoreCase(user.getUsername());
         // List<String> roles = new ArrayList<>();
         List<GrantedAuthority> authorities = new ArrayList<>();
-
-        
+            System.err.println("user:" + user.getUsername());
+       if(!user.getUsername().isEmpty()) {
+         Authentication newAuth = new UsernamePasswordAuthenticationToken(authResult.getPrincipal(), authResult.getCredentials(), authorities);
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
+       } 
+       else
         if (optionalUserProfile.isPresent()) {
             UserProfile userProfile = optionalUserProfile.get();
                  authorities = userProfile.getRoles().stream()
